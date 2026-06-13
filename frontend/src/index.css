@@ -1,0 +1,148 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root,
+[data-theme="bloom"] {
+  /* Backgrounds */
+  --bg-base:       #faf8ff;
+  --bg-card:       rgba(255, 255, 255, 0.62);
+  --bg-card-hover: rgba(255, 255, 255, 0.88);
+  --bg-input:      rgba(255, 255, 255, 0.75);
+  --bg-nav:        rgba(250, 248, 255, 0.82);
+  --bg-overlay:    rgba(10, 8, 30, 0.45);
+
+  /* Borders */
+  --border-card:   rgba(255, 255, 255, 0.9);
+  --border-subtle: rgba(131, 56, 236, 0.12);
+  --border-input:  rgba(131, 56, 236, 0.18);
+  --border-focus:  rgba(131, 56, 236, 0.55);
+
+  /* Text */
+  --text-primary:  #1a1040;
+  --text-secondary:#3a3560;
+  --text-muted:    #9499b0;
+  --text-faint:    #c0c4d8;
+  --text-on-dark:  #ffffff;
+
+  /* Brand accents */
+  --amber:  #ffbe0b;
+  --orange: #fb5607;
+  --pink:   #ff006e;
+  --violet: #8338ec;
+  --blue:   #3a86ff;
+
+  /* Gradient shortcuts */
+  --grad-primary:   linear-gradient(135deg, #ff006e, #8338ec);
+  --grad-secondary: linear-gradient(135deg, #3a86ff, #8338ec);
+  --grad-warm:      linear-gradient(135deg, #ffbe0b, #fb5607);
+  --grad-title:     linear-gradient(135deg, #ff006e 0%, #fb5607 30%, #ffbe0b 65%, #8338ec 100%);
+  --grad-brand:     linear-gradient(90deg, #ff006e, #8338ec);
+
+  /* Shadows */
+  --shadow-card:    0 4px 20px rgba(131, 56, 236, 0.07);
+  --shadow-hover:   0 8px 32px rgba(131, 56, 236, 0.14);
+  --shadow-btn:     0 6px 24px rgba(255, 0, 110, 0.4);
+
+  /* Orbs */
+  --orb-1: rgba(255,  0, 110, 0.14);
+  --orb-2: rgba(255,190,  11, 0.12);
+  --orb-3: rgba(131, 56, 236, 0.13);
+  --orb-4: rgba( 58,134, 255, 0.12);
+
+  /* Dot grid */
+  --dot-color: rgba(131, 56, 236, 0.08);
+
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(131, 56, 236, 0.33);
+}
+
+[data-theme="midnight"] {
+  --bg-base:       #0d0d1a;
+  --bg-card:       rgba(255, 255, 255, 0.05);
+  --bg-card-hover: rgba(255, 255, 255, 0.09);
+  --bg-input:      rgba(255, 255, 255, 0.07);
+  --bg-nav:        rgba(13, 13, 26, 0.88);
+  --bg-overlay:    rgba(0, 0, 0, 0.65);
+  --bg-lightbg: #c8c0f0;
+    --bg-hoveredbtn :rgba(37, 35, 47, 0.85);
+
+  --border-card:   rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(131, 56, 236, 0.25);
+  --border-input:  rgba(131, 56, 236, 0.3);
+  --border-focus:  rgba(131, 56, 236, 0.7);
+
+  --text-primary:  #f0eeff;
+  --text-secondary:#c8c0f0;
+  --text-muted:    #7870a0;
+  --text-faint:    #4a4570;
+  --text-on-dark:  #ffffff;
+
+  --amber:  #ffd040;
+  --orange: #ff7a30;
+  --pink:   #ff3d8a;
+  --violet: #a060ff;
+  --blue:   #60a0ff;
+
+  --grad-primary:   linear-gradient(135deg, #ff3d8a, #a060ff);
+  --grad-secondary: linear-gradient(135deg, #60a0ff, #a060ff);
+  --grad-warm:      linear-gradient(135deg, #ffd040, #ff7a30);
+  --grad-title:     linear-gradient(135deg, #ff3d8a 0%, #ff7a30 30%, #ffd040 65%, #a060ff 100%);
+  --grad-brand:     linear-gradient(90deg, #ff3d8a, #a060ff);
+
+  --shadow-card:    0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-hover:   0 8px 36px rgba(0, 0, 0, 0.55);
+  --shadow-btn:     0 6px 28px rgba(255, 61, 138, 0.45);
+
+  --orb-1: rgba(255, 61, 138, 0.18);
+  --orb-2: rgba(255, 208,  64, 0.12);
+  --orb-3: rgba(160, 96, 255, 0.18);
+  --orb-4: rgba( 96,160, 255, 0.14);
+
+  --dot-color: rgba(160, 96, 255, 0.1);
+  --scrollbar-thumb: rgba(160, 96, 255, 0.4);
+}
+
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+body {
+  margin: 0; padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+#root { min-height: 100vh; }
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+
+/* ── Dot grid  ── */
+.grid-texture {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+  background-size: 32px 32px;
+}

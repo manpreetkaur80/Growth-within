@@ -1,0 +1,467 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Grotesk:wght@400;600;700&display=swap');
+
+/* ── Keyframes ── */
+@keyframes shine {
+  to { left: 100%; }
+}
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-slide-down {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes tag-pop {
+  from { opacity: 0; transform: scale(0.8) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes orb-drift-a {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(40px, -30px); }
+  66%       { transform: translate(-25px, 35px); }
+}
+@keyframes orb-drift-b {
+  0%, 100% { transform: translate(0, 0); }
+  33%       { transform: translate(-35px, 25px); }
+  66%       { transform: translate(30px, -40px); }
+}
+@keyframes orb-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, 20px) scale(1.08); }
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: #f0eeff; }
+::-webkit-scrollbar-thumb  { background: #8338ec55; border-radius: 3px; }
+
+/* ── Root shell ── */
+.planner-root {
+  min-height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* top padding accounts for fixed navbar (68px) */
+  padding: 108px 24px 80px;
+  font-family: 'Space Grotesk', sans-serif;
+  box-sizing: border-box;
+
+  /* Soft multi-color pastel mesh */
+  background:
+    radial-gradient(ellipse at 15% 10%,  #ffbe0b22 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%,  #3a86ff22 0%, transparent 55%),
+    radial-gradient(ellipse at 10% 80%,  #ff006e1a 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 75%,  #8338ec1e 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%,  #fb560712 0%, transparent 60%),
+    var(--bg-base);
+}
+
+/* ── Ambient soft orbs ── */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 {
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, #ffbe0b44 0%, transparent 70%);
+  filter: blur(70px);
+  top: -160px; left: -120px;
+  animation: orb-drift-a 16s ease-in-out infinite;
+}
+.orb-2 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, #3a86ff33 0%, transparent 70%);
+  filter: blur(80px);
+  top: 20%; right: -140px;
+  animation: orb-drift-b 20s ease-in-out infinite;
+}
+.orb-3 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, #ff006e2a 0%, transparent 70%);
+  filter: blur(75px);
+  bottom: -60px; left: 15%;
+  animation: orb-drift-c 24s ease-in-out infinite;
+}
+.orb-4 {
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, #8338ec2e 0%, transparent 70%);
+  filter: blur(65px);
+  top: 55%; left: 60%;
+  animation: orb-drift-a 18s ease-in-out infinite reverse;
+}
+.orb-5 {
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, #fb560728 0%, transparent 70%);
+  filter: blur(60px);
+  top: 35%; left: 5%;
+  animation: orb-drift-b 14s ease-in-out infinite reverse;
+}
+
+/* ── Cursor glow ── */
+.cursor-glow {
+  position: fixed;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #8338ec14 0%, transparent 65%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* ── Dot grid texture ── */
+.grid-texture {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #8338ec18 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Content layer ── */
+.planner-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 980px;
+}
+
+/* ── Page header ── */
+.planner-header {
+  text-align: center;
+  margin-bottom: 52px;
+  opacity: 0;
+  animation: fade-slide-down 0.7s ease 0.1s forwards;
+}
+
+.eyebrow-tag {
+  display: inline-block;
+  padding: 5px 18px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #8338ec18, #3a86ff18);
+  border: 1.5px solid #8338ec33;
+  color: #8338ec;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 20px;
+  animation: tag-pop 0.6s 0.3s both;
+}
+
+/* Large, proud month title */
+.month-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(56px, 9vw, 100px);
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffbe0b 0%, #fb5607 28%, #ff006e 58%, #8338ec 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+
+.month-subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Weekday row ── */
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: float-up 0.5s 0.4s both;
+}
+
+.weekday-cell {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 0;
+}
+
+.weekday-col-0 { color: #fb8c00; }
+.weekday-col-1 { color: #3a86ff; }
+.weekday-col-2 { color: #ff006e; }
+.weekday-col-3 { color: #8338ec; }
+.weekday-col-4 { color: #3a86ff; }
+.weekday-col-5 { color: #fb5607; }
+.weekday-col-6 { color: #d4a000; }
+
+/* ── Calendar grid ── */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.empty-cell { /* offset placeholder */ }
+
+.cell-wrapper {
+  opacity: 0;
+  animation: float-up 0.4s both;
+}
+
+/* ── Day cell ── */
+.calendar-cell {
+  position: relative;
+  border-radius: 16px;
+  padding: 18px 8px;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  /* background: rgba(255, 255, 255, 0.55); */
+  background: var(--bg-card);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 2px 8px rgba(131, 56, 236, 0.06),
+    inset 0 1px 0 var(--border-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transform: scale(1);
+  transition:
+    transform      0.25s cubic-bezier(.23,1,.32,1),
+    background     0.25s ease,
+    border-color   0.25s ease,
+    box-shadow     0.25s ease,
+    color          0.2s ease;
+  overflow: hidden;
+  user-select: none;
+}
+
+.calendar-cell.hovered {
+  color: var(--text-primary);
+  /* background: rgba(37, 35, 47, 0.85); */
+
+  background-color: var(--bg-hoveredbtn);
+  border-color: color-mix(in srgb, var(--c1) 40%, white);
+  box-shadow:
+    0 6px 20px color-mix(in srgb, var(--c1) 22%, transparent),
+    0 2px 8px color-mix(in srgb, var(--c2) 15%, transparent),
+    inset 0 1px 0 rgba(255,255,255,1);
+  transform: scale(1.07);
+}
+
+.calendar-cell.selected {
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  border-color: transparent;
+  box-shadow:
+    0 8px 28px color-mix(in srgb, var(--c1) 45%, transparent),
+    0 4px 12px color-mix(in srgb, var(--c2) 30%, transparent);
+  transform: scale(1.12);
+  z-index: 2;
+}
+
+/* Today amber dot */
+.today-dot {
+  position: absolute;
+  top: 6px; right: 8px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #ffbe0b;
+  box-shadow: 0 0 6px #ffbe0b99;
+}
+
+.day-number {
+  position: relative;
+  z-index: 1;
+}
+
+/* Shine sweep on hover */
+.shine-sweep {
+  position: absolute;
+  top: 0; left: -100%;
+  width: 200%; height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 30%,
+    rgba(255,255,255,0.45) 50%,
+    transparent 70%
+  );
+  animation: shine 0.55s ease forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Selected date card ── */
+.selected-card {
+  margin-top: 48px;
+  background: var(--bg-card);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(131, 56, 236, 0.1),
+    0 2px 8px rgba(58, 134, 255, 0.08),
+    inset 0 1px 0 rgba(255,255,255,1);
+  flex-wrap: wrap;
+  animation: card-in 0.4s ease both;
+}
+
+.selected-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.selected-label {
+  color: #aab0cc;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.selected-date {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  background: linear-gradient(90deg, #ff006e, #8338ec);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.selected-tag {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Journal CTA */
+.journal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ff006e, #8338ec);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 6px 24px #ff006e44, 0 3px 12px #8338ec33;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.journal-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 10px 32px #ff006e66, 0 5px 18px #8338ec55;
+}
+
+/* ── Month nav ── */
+.month-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  margin-top: 40px;
+  color: #aab0cc;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.nav-dot {
+  color: #8338ec;
+  font-size: 18px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .planner-root { padding: 96px 12px 60px; }
+
+  .calendar-cell {
+    font-size: 13px;
+    padding: 12px 4px;
+    border-radius: 10px;
+  }
+
+  .weekday-cell {
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .calendar-grid,
+  .weekday-row { gap: 6px; }
+
+  .selected-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 20px;
+  }
+
+  .journal-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Month nav buttons (dynamic planner) ── */
+.month-nav-btn {
+  /* background: rgba(255,255,255,0.6); */
+  background: var(--bg-card);
+  border: 1.5px solid rgba(131,56,236,0.18);
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+.month-nav-btn:hover {
+  background: rgba(131,56,236,0.08);
+  border-color: rgba(131,56,236,0.35);
+  color: #8338ec;
+}
+
+.month-nav-today {
+  background: linear-gradient(135deg, #ff006e, #8338ec);
+  border: none;
+  border-radius: 50px;
+  padding: 8px 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 3px 12px #ff006e33;
+  transition: transform 0.2s ease;
+}
+.month-nav-today:hover { transform: scale(1.05); }
