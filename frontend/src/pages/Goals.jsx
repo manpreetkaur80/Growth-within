@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "../styles/goals.css";
-import { api } from "../api";
+import { api } from "../Api";
 
 const CATEGORY_COLORS = {
   health:    ['#fb5607', '#ffbe0b'],

@@ -3,7 +3,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../styles/journal.css";
-import { api } from "../api";
+import { api } from "../Api";
 
 const MOODS = [
   { key: "happy",   emoji: "🙂", label: "Good",  color: "#ffbe0b" },

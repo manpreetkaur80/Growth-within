@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "../styles/habits.css";
-import { api } from "../api";
+import { api } from "../Api";
 
 const ACCENT_COLORS = [
   ['#ff006e', '#8338ec'],

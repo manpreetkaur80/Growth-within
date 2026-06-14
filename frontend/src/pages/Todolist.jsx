@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import "../styles/todolist.css";
-import { api } from "../api";
+import { api } from "../Api";
 
 
 const getRealToday = () => {

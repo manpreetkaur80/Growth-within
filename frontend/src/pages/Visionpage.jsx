@@ -1,7 +1,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import "../styles/visionpage.css";
-import { api } from "../api";
+import { api } from "../Api";
 
 const UNSPLASH_KEY = "NBvpY2ds0mr_TOCIJhm3-0-A9ZsQk7Avz4M--E4wbYU";
 

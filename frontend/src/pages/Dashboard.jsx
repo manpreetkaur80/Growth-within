@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/dashboard.css";
-import { api } from "../api";
+import { api } from "../Api";
 
 export default function Dashboard() {
   const [mounted,  setMounted]  = useState(false);
