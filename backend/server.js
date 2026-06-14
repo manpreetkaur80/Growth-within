@@ -9,8 +9,8 @@ import jwt        from "jsonwebtoken";
 
 const app = express();
 app.use(cors({
-  origin: ["https://growth-within-frontend.onrender.com", "http://localhost:5173"],
-  credentials: true
+  origin: "*",
+  credentials: false
 }));
 app.use(express.json());
  
