@@ -15,7 +15,7 @@ app.use(cors({
 app.use(express.json());
  
 // ── Connect to MongoDB 
-mongoose.connect("mongodb://localhost:27017/growthApp")
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/growthApp")
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.error("❌ MongoDB error:", err));
 
