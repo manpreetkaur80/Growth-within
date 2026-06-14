@@ -1,5 +1,5 @@
 
-const BASE = "http://localhost:5000";
+const BASE = "https://growth-within.onrender.com";
 
 export const api = {
   get: (url) =>
