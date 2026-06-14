@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/navbar.css';
-import { useTheme, THEMES } from '../context/ThemeContext';
+import { useTheme, THEMES } from '../context/ThemeContextNew';
 
 const NAV_LINKS = [
   { label: 'Dashboard',    path: '/dashboard' },
