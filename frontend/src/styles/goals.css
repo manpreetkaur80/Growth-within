@@ -668,7 +668,31 @@
   transition: all 0.2s ease;
 }
 .cancel-edit-btn:hover { background: rgba(0,0,0,0.04); }
+.edit-milestone-item {
+  justify-content: space-between;
+}
 
+.edit-milestone-text {
+  flex: 1;
+}
+
+.remove-milestone-btn {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,80,100,0.1);
+  color: #ff5064;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.remove-milestone-btn:hover {
+  background: rgba(255,80,100,0.25);
+}
 /* ── Responsive ── */
 @media (max-width: 700px) {
   .goals-root      { padding: 96px 12px 60px; }

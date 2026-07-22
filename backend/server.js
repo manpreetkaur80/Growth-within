@@ -223,47 +223,99 @@ const seedDemoAccount = async () => {
     }
 
     // ── Goals ──
-    const goalCount = await Goal.countDocuments({ userId: uid });
-    if (goalCount === 0) {
-      await Goal.insertMany([
-        {
-          userId: uid, title: "Land a Frontend Developer Job",
-          description: "Build a strong portfolio and apply to 5 companies per week.",
-          category: "career",
-          milestones: [
-            { step: "Finish portfolio project",         done: true },
-            { step: "Write compelling README files",    done: true },
-            { step: "Deploy all projects live",         done: false },
-            { step: "Apply to 20 companies",            done: false },
-            { step: "Complete 3 technical interviews",  done: false },
-          ],
-        },
-        {
-          userId: uid, title: "Build a Consistent Fitness Habit",
-          description: "Work out at least 4 times a week for 3 months.",
-          category: "health",
-          milestones: [
-            { step: "Buy gym membership",             done: true },
-            { step: "Complete first week (4 workouts)",done: true },
-            { step: "Complete first month",           done: true },
-            { step: "Complete 3 months",              done: false },
-          ],
-        },
-        {
-          userId: uid, title: "Read 12 Books This Year",
-          description: "One book per month across different genres.",
-          category: "personal",
-          milestones: [
-            { step: "Read Atomic Habits",       done: true },
-            { step: "Read Deep Work",           done: true },
-            { step: "Read The Alchemist",       done: true },
-            { step: "Read 4 more books",        done: false },
-            { step: "Complete all 12",          done: false },
-          ],
-        },
-      ]);
-      console.log("✅ Demo goals seeded");
-    }
+    const GoalSchema = new mongoose.Schema({
+  userId:      { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  title:       String,
+  description: String,
+  category:    String,
+  milestones:  [{ step: String, done: { type: Boolean, default: false } }],
+});
+
+const Goal = mongoose.model("Goal", GoalSchema);
+
+app.get("/goals", authMiddleware, async (req, res) => {
+  const goals = await Goal.find({ userId: req.user.userId });
+  res.json(goals);
+});
+
+app.post("/goals", authMiddleware, async (req, res) => {
+  const { title, description, category, milestones } = req.body;
+  const goal = new Goal({ userId: req.user.userId, title, description, category, milestones });
+  await goal.save();
+  res.json(goal);
+});
+
+// ── NEW: full edit (title, description, category, milestones) ──
+app.put("/goals/:goalId", authMiddleware, async (req, res) => {
+  const { goalId } = req.params;
+  const { title, description, category, milestones } = req.body;
+  const goal = await Goal.findOneAndUpdate(
+    { _id: goalId, userId: req.user.userId },
+    { title, description, category, milestones },
+    { new: true }
+  );
+  if (!goal) return res.status(404).json({ error: "Goal not found" });
+  res.json(goal);
+});
+
+app.put("/goals/:goalId/milestone/:index", authMiddleware, async (req, res) => {
+  const { goalId, index } = req.params;
+  const { done } = req.body;
+  const goal = await Goal.findOne({ _id: goalId, userId: req.user.userId });
+  if (!goal) return res.status(404).json({ error: "Goal not found" });
+  goal.milestones[index].done = done;
+  await goal.save();
+  res.json(goal);
+});
+
+app.delete("/goals/:id", authMiddleware, async (req, res) => {
+  await Goal.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
+  res.json({ success: true });
+});
+
+
+
+    // const goalCount = await Goal.countDocuments({ userId: uid });
+    // if (goalCount === 0) {
+    //   await Goal.insertMany([
+    //     {
+    //       userId: uid, title: "Land a Frontend Developer Job",
+    //       description: "Build a strong portfolio and apply to 5 companies per week.",
+    //       category: "career",
+    //       milestones: [
+    //         { step: "Finish portfolio project",         done: true },
+    //         { step: "Write compelling README files",    done: true },
+    //         { step: "Deploy all projects live",         done: false },
+    //         { step: "Apply to 20 companies",            done: false },
+    //         { step: "Complete 3 technical interviews",  done: false },
+    //       ],
+    //     },
+    //     {
+    //       userId: uid, title: "Build a Consistent Fitness Habit",
+    //       description: "Work out at least 4 times a week for 3 months.",
+    //       category: "health",
+    //       milestones: [
+    //         { step: "Buy gym membership",             done: true },
+    //         { step: "Complete first week (4 workouts)",done: true },
+    //         { step: "Complete first month",           done: true },
+    //         { step: "Complete 3 months",              done: false },
+    //       ],
+    //     },
+    //     {
+    //       userId: uid, title: "Read 12 Books This Year",
+    //       description: "One book per month across different genres.",
+    //       category: "personal",
+    //       milestones: [
+    //         { step: "Read Atomic Habits",       done: true },
+    //         { step: "Read Deep Work",           done: true },
+    //         { step: "Read The Alchemist",       done: true },
+    //         { step: "Read 4 more books",        done: false },
+    //         { step: "Complete all 12",          done: false },
+    //       ],
+    //     },
+    //   ]);
+    //   console.log("✅ Demo goals seeded");
+    // }
 
     // ── Habits ──
     const habitGrid = await HabitGrid.findOne({ userId: uid, month: monthStr });

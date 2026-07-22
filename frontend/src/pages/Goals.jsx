@@ -189,7 +189,6 @@
 //     </div>
 //   );
 // }
-
 import { useState, useEffect } from "react";
 import "../styles/goals.css";
 import { api } from "../Api";
@@ -216,10 +215,10 @@ export default function Goals() {
   const [newMilestone, setNewMilestone] = useState("");
 
   // ── Edit state
-  const [editingId, setEditingId] = useState(null);
-  const [editData,  setEditData]  = useState({ title: "", description: "", category: "" });
+  const [editingId,      setEditingId]      = useState(null);
+  const [editData,       setEditData]       = useState({ title: "", description: "", category: "", milestones: [] });
+  const [editMilestone,  setEditMilestone]  = useState("");
 
-  // ── Load goals
   useEffect(() => {
     api.get("/goals")
       .then(data => setGoals(Array.isArray(data) ? data : []))
@@ -231,7 +230,6 @@ export default function Goals() {
     return () => clearTimeout(t);
   }, []);
 
-  // ── Add goal
   const addGoal = async () => {
     if (!newGoal.title.trim()) return;
     const data = await api.post("/goals", newGoal);
@@ -240,20 +238,17 @@ export default function Goals() {
     setShowForm(false);
   };
 
-  // ── Add milestone to new goal
   const addMilestoneToNewGoal = () => {
     if (!newMilestone.trim()) return;
     setNewGoal({ ...newGoal, milestones: [...newGoal.milestones, { step: newMilestone, done: false }] });
     setNewMilestone("");
   };
 
-  // ── Toggle milestone
   const toggleMilestone = async (goalId, index, current) => {
     const data = await api.put(`/goals/${goalId}/milestone/${index}`, { done: !current });
     setGoals(prev => prev.map(g => g._id === goalId ? data : g));
   };
 
-  // ── Delete goal
   const deleteGoal = async (id) => {
     await api.delete(`/goals/${id}`);
     setGoals(prev => prev.filter(g => g._id !== id));
@@ -261,22 +256,37 @@ export default function Goals() {
 
   // ── Start editing a goal
   const startEdit = (e, goal) => {
-    e.stopPropagation(); // don't trigger card expand
+    e.stopPropagation();
     setEditingId(goal._id);
     setEditData({
       title: goal.title || "",
       description: goal.description || "",
       category: goal.category || "",
+      milestones: goal.milestones ? [...goal.milestones] : [],
     });
+    setEditMilestone("");
   };
 
-  // ── Cancel editing
   const cancelEdit = (e) => {
     e.stopPropagation();
     setEditingId(null);
   };
 
-  // ── Save edited goal
+  // ── Add a new milestone while editing
+  const addMilestoneToEdit = (e) => {
+    e.stopPropagation();
+    if (!editMilestone.trim()) return;
+    setEditData({ ...editData, milestones: [...editData.milestones, { step: editMilestone, done: false }] });
+    setEditMilestone("");
+  };
+
+  // ── Remove a milestone while editing
+  const removeMilestoneFromEdit = (e, index) => {
+    e.stopPropagation();
+    setEditData({ ...editData, milestones: editData.milestones.filter((_, i) => i !== index) });
+  };
+
+  // ── Save edited goal (includes milestones now)
   const saveEdit = async (e, goalId) => {
     e.stopPropagation();
     if (!editData.title.trim()) return;
@@ -377,6 +387,30 @@ export default function Goals() {
                         <textarea className="form-textarea" value={editData.description}
                           onChange={e => setEditData({ ...editData, description: e.target.value })}
                           placeholder="Describe this goal..." />
+
+                        <div className="milestone-builder">
+                          <p className="milestone-label">Milestones</p>
+                          {editData.milestones.length > 0 && (
+                            <ul className="new-milestone-list">
+                              {editData.milestones.map((m, i) => (
+                                <li key={i} className="new-milestone-item edit-milestone-item">
+                                  <span className="milestone-dot" />
+                                  <span className="edit-milestone-text">{m.step}</span>
+                                  <button className="remove-milestone-btn"
+                                    onClick={e => removeMilestoneFromEdit(e, i)}>✕</button>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          <div className="milestone-input-row">
+                            <input className="form-input milestone-inp" value={editMilestone}
+                              onChange={e => setEditMilestone(e.target.value)}
+                              placeholder="Add a milestone step..."
+                              onKeyDown={e => e.key === "Enter" && addMilestoneToEdit(e)} />
+                            <button className="add-milestone-btn" onClick={addMilestoneToEdit}>+ Step</button>
+                          </div>
+                        </div>
+
                         <div className="edit-actions">
                           <button className="save-edit-btn" onClick={e => saveEdit(e, goal._id)}>Save</button>
                           <button className="cancel-edit-btn" onClick={cancelEdit}>Cancel</button>
