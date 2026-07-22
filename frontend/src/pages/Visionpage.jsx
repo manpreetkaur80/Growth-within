@@ -355,7 +355,7 @@ export default function Visionpage() {
             <div className="board-top">
               <div className="board-top-left">
                 <h2 className="panel-title">My Vision Board</h2>
-                <span className="board-count">{boardTiles.length} tiles · auto-saved</span>
+                <span className="board-count">{boardTiles.length} tiles ·</span>
               </div>
               <div className="board-filters">
                 {boardCategories.map(cat => {
