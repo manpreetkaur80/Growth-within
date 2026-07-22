@@ -21,7 +21,8 @@
   /* Text */
   --text-primary:  #1a1040;
   --text-secondary:#3a3560;
-  --text-muted:    #9499b0;
+  /* --text-muted:    #9499b0; */
+  --text-muted:    #c2c6d6;
   --text-faint:    #c0c4d8;
   --text-on-dark:  #ffffff;
 
