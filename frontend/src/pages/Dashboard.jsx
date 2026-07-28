@@ -10,7 +10,7 @@ export default function Dashboard() {
   const [greeting, setGreeting] = useState("");
 
   const user = (() => {
-    try { return JSON.parse(localStorage.getItem("user")); } catch { return null; }
+    try { return JSON.parse(localStorage.getItem("user")); } catch { return null; }   // stringyfy converts object to json string , parse convert again to object 
   })();
 
   const today = new Date();
