@@ -86,15 +86,15 @@ export default function Journal() {
 
   const toggleTask = async (id, current) => {
     try {
-      const data = await api.put(`/todos/${id}`, { done: !current });
-      setDateTasks(prev => prev.map(t => t._id === id ? data : t));
+      const data = await api.put(`/todos/${id}`, { done: !current });    //sends to backend throgh api.js , iff it is true then set to false if false then true 
+      setDateTasks(prev => prev.map(t => t._id === id ? data : t));       //data is updated of the perticular id after updating 
     } catch (err) { console.error("Toggle error:", err); }
   };
 
 
   const deleteTask = async (id) => {
     try {
-      await api.delete(`/todos/${id}`);
+      await api.delete(`/todos/${id}`);                             //sends the request to backend, 
       setDateTasks(prev => prev.filter(t => t._id !== id));
     } catch (err) { console.error("Delete error:", err); }
   };
