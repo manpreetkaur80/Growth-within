@@ -10,23 +10,23 @@ export default function Login() {
   const navigate = useNavigate();
   const [form,    setForm]    = useState({ email: "", password: "" });
   const [error,   setError]   = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);    // the state is for loading , to disable the button if clicked once , 
   const [demoLoading, setDemoLoading] = useState(false);
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });    // here e.target.name=email the name mentioned , and value is which we enters
 
   const doLogin = async (email, password, setLoad) => {
-    setError("");
-    setLoad(true);
+    setError("");                      // clears the screen first , earlier if any error ocurred 
+    setLoad(true);                  // settingg loading true , so use can't sent multiple requests to server by clicking again and again ,
     try {
-      const res  = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+      const res  = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {   // the line where react tells backwnd to check login // .env file , backend url , 
+        method: "POST",                                            
+        headers: { "Content-Type": "application/json" },        //tells that content is json fornmat
+        body: JSON.stringify({ email, password }),          //converts object to json , 
       });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error || "Login failed"); return; }
-      localStorage.setItem("token", data.token);
+      const data = await res.json();          //converts the data in res came from backend to json format 
+      if (!res.ok) { setError(data.error || "Login failed"); return; }        //if any error recived from backend 
+      localStorage.setItem("token", data.token);              //jwt token recived from backend is stored locally 
       localStorage.setItem("user",  JSON.stringify(data.user));
       navigate("/planner");
     } catch {
