@@ -23,7 +23,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "growthwithin_secret_2026";
 
 // ── Auth Middleware 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  const token = req.headers.authorization?.split(" ")[1];                        //
   if (!token) return res.status(401).json({ error: "No token provided" });
   try {
     req.user = jwt.verify(token, JWT_SECRET);
@@ -68,13 +68,13 @@ app.post("/auth/register", async (req, res) => {
 });
 
 // Login
-app.post("/auth/login", async (req, res) => {
+app.post("/auth/login", async (req, res) => {             // recieved post req to this url , auth/login
   try {
     const { email, password } = req.body;
     if (!email || !password)
       return res.status(400).json({ error: "Email and password are required" });
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email });                                //first email matches to the mongodb database , 
     if (!user) return res.status(400).json({ error: "Invalid email or password" });
 
     const match = await bcrypt.compare(password, user.password);
