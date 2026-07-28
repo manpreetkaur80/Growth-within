@@ -19,7 +19,7 @@ function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" replace />;
 }
-
+// everything inside function protectedRoute become children and if tokens exit in locally it directly shows the chideren else login  
 function App() {
   return (
     <Router>
