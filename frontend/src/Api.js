@@ -2,8 +2,8 @@
 const BASE = "https://growth-within.onrender.com";
 
 export const api = {
-  get: (url) =>
-    fetch(`${BASE}${url}`, {
+  get: (url) =>                    //whenever the get req, it comes over here from api.get ,url is fetched like /jpurnal ,
+    fetch(`${BASE}${url}`, {                  //as we have base , so fetch becomes , https://growth-within.onrender.com/journal
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
