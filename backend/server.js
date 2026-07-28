@@ -520,7 +520,7 @@ app.put("/todos/:id", authMiddleware, async (req, res) => {
 
 
 app.delete("/todos/:id", authMiddleware, async (req, res) => {
-  await Todo.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
+  await Todo.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });  //finds the data and delete ,
   res.json({ success: true });
 });
 
