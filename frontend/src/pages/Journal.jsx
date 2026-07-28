@@ -38,7 +38,7 @@ export default function Journal() {
 
  
   useEffect(() => {
-    api.get(`/journal/${resolvedDate}`)
+    api.get(`/journal/${resolvedDate}`)                 //calls api.js , sent get req with url ,() go to comment line of api.js)
       .then(data => {
         setMood(data.mood || "");
         setWentWell(data.wentWell || "");
