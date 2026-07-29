@@ -5,6 +5,8 @@ import '../styles/planner.css';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+
+//useRef() stores a reference to a DOM element (or a mutable value) that you can change without causing the component to re-render.
 const CELL_ACCENTS = [
   ['#3a86ff', '#8338ec'],
   ['#8338ec', '#ff006e'],
