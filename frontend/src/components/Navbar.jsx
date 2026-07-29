@@ -12,9 +12,11 @@ const NAV_LINKS = [
   { label: 'To-Do List',   path: '/todolist' },
 ];
 
-export default function Navbar() {
-  const location  = useLocation();
-  const navigate  = useNavigate();
+//useRef() stores a reference to a DOM element (or a mutable value) that you can change without causing the component to re-render.
+
+export default function Navbar() {                      //use params :get value from url like id: 
+  const location  = useLocation();                      //which page is currently on 
+  const navigate  = useNavigate();                      //go to another page
   const { theme, setTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
