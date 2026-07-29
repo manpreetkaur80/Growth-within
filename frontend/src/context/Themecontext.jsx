@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext(null);
-
+                                                        //themecontext is a shared data , like white board
 export const THEMES = [
   { id: "bloom",    label: "Bloom",    icon: "✦" },
   { id: "midnight", label: "Midnight", icon: "🌙" },

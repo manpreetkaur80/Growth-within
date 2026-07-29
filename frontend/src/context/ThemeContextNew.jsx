@@ -1,18 +1,18 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-const ThemeContext = createContext(null);
+const ThemeContext = createContext(null);                               //creates a empty global shared box   
 
-export const THEMES = [
+export const THEMES = [                                           //these is nothing but array of objects
   { id: "bloom",    label: "Bloom",    icon: "✦" },
   { id: "midnight", label: "Midnight", icon: "🌙" },
 ];
-export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState(
+export function ThemeProvider({ children }) {                 //function called from main.jsx  
+  const [theme, setThemeState] = useState(                     //creates state , the precvious selected state from localstorage , if no exist then set to light bloom
     () => localStorage.getItem("gwi-theme") || "bloom"
   );
   
-document.documentElement.setAttribute(
+document.documentElement.setAttribute(                              //change all the attributes of css
   "data-theme",
   localStorage.getItem("gwi-theme") || "bloom"
 );
