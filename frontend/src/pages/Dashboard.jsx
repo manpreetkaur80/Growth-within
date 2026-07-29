@@ -31,27 +31,27 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        const [todos, goals, habits, journal] = await Promise.all([
-          api.get("/todos"),
-          api.get("/goals"),
-          api.get(`/habitgrid/${monthStr}`),
-          api.get(`/journal/${todayDate}`),
-        ]);
+        const [todos, goals, habits, journal] = await Promise.all([  //priomise.All is very important supore , doing like  todos = await api.get , like wise for all pages , it took 1 sec for every , it becomes slow
+          api.get("/todos"),                                          //todos = result[0];
+          api.get("/goals"),                                               //         goals = result[1];
+          api.get(`/habitgrid/${monthStr}`),                           // habits = result[2];
+          api.get(`/journal/${todayDate}`),                                
+                  ]);
 
         // Todos
-        const todayTasks   = (todos || []).filter(t => t.date === todayDate);
-        const generalTasks = (todos || []).filter(t => !t.date);
-        const todayDone    = todayTasks.filter(t => t.done).length;
-        const generalDone  = generalTasks.filter(t => t.done).length;
+        const todayTasks   = (todos || []).filter(t => t.date === todayDate);     //todays task means task with dated are calculated
+        const generalTasks = (todos || []).filter(t => !t.date);              // tasks without date calculated
+        const todayDone    = todayTasks.filter(t => t.done).length;           // done tasks are found 
+        const generalDone  = generalTasks.filter(t => t.done).length;           
 
         // Goals
-        const goalList      = Array.isArray(goals) ? goals : [];
+        const goalList      = Array.isArray(goals) ? goals : [];               
         const totalGoals    = goalList.length;
         const avgProgress   = totalGoals
-          ? Math.round(goalList.reduce((sum, g) => {
-              const done = (g.milestones || []).filter(m => m.done).length;
-              const total = (g.milestones || []).length;
-              return sum + (total ? done / total : 0);
+          ? Math.round(goalList.reduce((sum, g) => {         // .round =round figure value after calculation 
+              const done = (g.milestones || []).filter(m => m.done).length;       //doene are counted
+              const total = (g.milestones || []).length;            //total are counted
+              return sum + (total ? done / total : 0);             
             }, 0) / totalGoals * 100)
           : 0;
         const completedGoals = goalList.filter(g =>
