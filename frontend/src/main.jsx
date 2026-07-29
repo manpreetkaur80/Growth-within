@@ -8,7 +8,7 @@ import './index.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ThemeProvider>
+    <ThemeProvider>                           //calls function from themecontextnew.jsx
       <App />
     </ThemeProvider>
   </StrictMode>
