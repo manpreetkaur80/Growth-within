@@ -9,7 +9,7 @@ export default function ForgotPassword() {
   const [error,   setError]   = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();     //normal <form> reloads the page after submit , but this line by react tells the browser that don't relad the page I'll handle by my self submission
     setError("");
     setLoading(true);
     try {
@@ -125,3 +125,19 @@ export default function ForgotPassword() {
     </div>
   );
 }
+
+// User types email
+//         ↓
+// email state updates
+
+// Clicks Send
+//         ↓
+// loading = true
+
+// Success?
+//         ↓
+// Yes → sent = true
+
+// No
+//         ↓
+// error = "Something went wrong"
