@@ -20,13 +20,16 @@ export default function Habits() {
   const month     = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}`;
   const todayDate = `${month}-${String(today.getDate()).padStart(2,"0")}`;
 
+  //user?.name , is user exist then it returns the name , otherwise undefiened ,
+  //user.name , if name is null then the fucntion crashes , so shoild not use this directly
+
   // ── Load grid
   useEffect(() => {
     api.get(`/habitgrid/${month}`)
       .then(data => setGrid(data))
       .catch(err => console.error("Habits load error:", err));
   }, [month]);
-
+                              //month is here , shows that if month changes then new month habit grid loads , 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 60);
     return () => clearTimeout(t);
@@ -40,7 +43,9 @@ export default function Habits() {
 
   // ── Add habit
   const addHabit = async () => {
-    if (!newHabit.trim()) return;
+
+    //guard clause , this retrn called as
+    if (!newHabit.trim()) return;           //checks for the empty input box  ,trim function trims the extra space like "      reading      "to "reading" only remove from end and start not from middle
     const data = await api.put(`/habitgrid/${month}/addhabit`, { name: newHabit });
     setGrid(data);
     setNewHabit("");
